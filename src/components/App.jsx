@@ -5,21 +5,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPlayingVideo: '',
-      videoQueue: []
+      currentPlayingVideo: exampleVideoData[_.random(0, exampleVideoData.length - 1)],
+      videoList: exampleVideoData
     };
     this.handleClick = this.handleClick.bind(this);
-    //BIND CLICK!!!
-    //set state function on the videoQueue
-    // when VideoList instantiates
-    // add each video's title to the videoQueue array  
   }
 
-  handleClick() {
-    console.log('It works');
-    // this.setState(state => ({
-    //   currentPlayingVideo: {this.video.snippet.title} //title that was clicked
-    // }));
+  handleClick(video) {
+    console.log('It works! Here is the video', video);
+    this.setState({currentPlayingVideo: video});
   }
 
   // buildVideoQueue() {
@@ -36,10 +30,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <div><h5><em>videoPlayer</em> <VideoPlayer video={exampleVideoData[0]} /></h5></div>
+            <div><h5><em>videoPlayer</em> <VideoPlayer video={this.state.currentPlayingVideo} /></h5></div>
           </div>
           <div className="col-md-5">
-            <div><h5><em>videoList </em> <VideoList videos={window.exampleVideoData} handleClick={this.handleClick}/> </h5></div>
+            <div><h5><em>videoList </em> <VideoList videos={this.state.videoList} handleClick={this.handleClick}/> </h5></div>
           </div>
         </div>
       </div>

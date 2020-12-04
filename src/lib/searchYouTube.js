@@ -8,7 +8,7 @@ var searchYouTube = (_options, callback) => {
       key: YOUTUBE_API_KEY,
       query: 'dolla dolla bills y\'all',
       maxResults: 5,
-      //type: 'video',
+      //type: 'video', /// adding comment
       //videoEmbeddable: true,
     },
     // success: callback(video) {

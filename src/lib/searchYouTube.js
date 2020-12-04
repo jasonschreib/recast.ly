@@ -1,25 +1,20 @@
-import { ajax } from 'jquery';
-
-var searchYouTube = (_options, callback) => {
-  ajax({
+var searchYouTube = (options, callback) => {
+  $.ajax({
     type: 'GET',
     url: 'https://www.googleapis.com/youtube/v3/search',
-    options: {
-      key: YOUTUBE_API_KEY,
-      query: 'dolla dolla bills y\'all',
-      maxResults: 5,
-      //type: 'video', /// adding comment
-      //videoEmbeddable: true,
+    data: {
+      key: options.key, 
+      q: options.query,
+      maxResults: options.max,
+      type: 'video', 
+      videoEmbeddable: true,
+      part: 'snippet'
     },
-    // success: callback(video) {
-    //   //embedVideo(video); to be handled
-    // },
-    // failure: function(response) {
-    //   console.log('Request Failed');
-    // }
-  });
-  
-  
+    success: (response) => { callback(response.items); }, //callback func to be defined,
+    failure: function(response) {
+      console.log('Request Failed', response);
+    }
+  });  
 }; 
 
 export default searchYouTube;

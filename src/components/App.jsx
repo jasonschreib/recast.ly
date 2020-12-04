@@ -1,5 +1,7 @@
 import VideoList from '../../src/components/VideoList.js';
 import VideoPlayer from '../../src/components/VideoPlayer.js';
+import searchYouTube from '../../src/lib/searchYoutube.js';
+import YOUTUBE_API_KEY from '../../src/config/youtube.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class App extends React.Component {
       videoList: exampleVideoData
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleClick(video) {
@@ -16,9 +19,23 @@ class App extends React.Component {
     this.setState({currentPlayingVideo: video});
   }
 
-  // buildVideoQueue() {
+  componentDidMount() {
+    this.handleSearch();
+  }
 
-  // }
+  handleSearch() {
+    var searchObj = {
+      key: YOUTUBE_API_KEY,
+      q: 'cute ugly',
+      max: 5
+    };
+    searchYouTube(searchObj, (videos) => {
+      this.setState({
+        currentPlayingVideo: videos[0],
+        videoList: videos
+      });
+    });
+  }
 
   render() {
     return (

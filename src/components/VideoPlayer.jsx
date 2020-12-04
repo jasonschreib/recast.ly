@@ -1,4 +1,3 @@
-//IMPORT!!!
 import VideoListEntry from '../../src/components/VideoListEntry.js';
 
 var VideoPlayer = (props) => ( 

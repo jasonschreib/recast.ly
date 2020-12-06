@@ -1,21 +1,39 @@
 var searchYouTube = (options, callback) => {
-  $.ajax({
-    type: 'GET',
-    url: 'https://www.googleapis.com/youtube/v3/search',
-    data: {
-      key: options.key, 
-      q: options.query,
-      maxResults: options.max,
-      type: 'video', 
-      videoEmbeddable: true,
-      part: 'snippet'
-    },
-    success: (response) => { callback(response.items); }, //callback func to be defined,
-    failure: function(response) {
-      console.log('Request Failed', response);
-    }
-  });  
-}; 
+  $.get('https://www.googleapis.com/youtube/v3/search', {
+    key: options.key, 
+    q: options.query,
+    maxResults: options.max,
+    type: 'video', 
+    videoEmbeddable: true,
+    part: 'snippet'
+  })
+    .done(({items}) => {
+      if (callback) {
+        callback(items);
+      } 
+  
+    })
+    .fail(({error}) => {
+      console.log('It failed');
+    });
+};
+//   $.ajax({
+//     type: 'GET',
+//     url: 'https://www.googleapis.com/youtube/v3/search',
+//     data: {
+//       key: options.key, 
+//       q: options.query,
+//       maxResults: options.max,
+//       type: 'video', 
+//       videoEmbeddable: true,
+//       part: 'snippet'
+//     },
+//     success: (response) => { console.log(response.items); /*callback(response.items*/ }, //callback func to be defined,
+//     failure: (response) => {
+//       console.log('Request Failed', response);
+//     }
+//   });  
+// }; 
 
 export default searchYouTube;
 

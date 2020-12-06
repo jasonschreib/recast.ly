@@ -2,6 +2,7 @@ import VideoList from '../../src/components/VideoList.js';
 import VideoPlayer from '../../src/components/VideoPlayer.js';
 import searchYouTube from '../../src/lib/searchYoutube.js';
 import YOUTUBE_API_KEY from '../../src/config/youtube.js';
+import Search from '../../src/components/Search.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,19 +15,20 @@ class App extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  handleClick(video) {
-    console.log('It works! Here is the video', video);
-    this.setState({currentPlayingVideo: video});
-  }
-
   componentDidMount() {
-    this.handleSearch();
+    this.handleSearch('chimpokemon');
   }
 
-  handleSearch() {
+  handleClick(video) {
+    this.setState({
+      currentPlayingVideo: video
+    });
+  }
+
+  handleSearch(query) {
     var searchObj = {
-      key: YOUTUBE_API_KEY,
-      q: 'cute ugly',
+      key: 'AIzaSyBHSX4n-F3eeobmmBnzQ2MTeJHkPP-6QeY',
+      query: query,
       max: 5
     };
     searchYouTube(searchObj, (videos) => {
@@ -42,7 +44,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <div><h5><em>search</em> <Search handleSearchInputChange={_.debounce(this.handleSearch, 500)} /> </h5></div>
           </div>
         </nav>
         <div className="row">
@@ -50,7 +52,10 @@ class App extends React.Component {
             <div><h5><em>videoPlayer</em> <VideoPlayer video={this.state.currentPlayingVideo} /></h5></div>
           </div>
           <div className="col-md-5">
-            <div><h5><em>videoList </em> <VideoList videos={this.state.videoList} handleClick={this.handleClick}/> </h5></div>
+            <div><h5><em>videoList </em> 
+              <VideoList
+                videos={this.state.videoList} 
+                handleClick={this.handleClick}/> </h5></div>
           </div>
         </div>
       </div>
